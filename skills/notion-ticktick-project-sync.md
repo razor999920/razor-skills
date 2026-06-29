@@ -13,4 +13,4 @@ Keeps your side-project list **in sync** between your Notion 🏗️ Project dat
 Creating, renaming, or changing status/priority/category of a project in either app; starting, planning, pausing, finishing, or abandoning a project — even if you only mention one app and never say "sync." Phrases like "add this project", "mark X as done / in progress", "I'm starting / parking / dropping a project", "new app idea", "update my project board".
 
 ## Pairs with
-`notion-page-style` (page formatting) and `dev-folder-organizer` (the local folder side of a project).
+`dev-folder-organizer` (the local folder side of a project).

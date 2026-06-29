@@ -1,6 +1,6 @@
 # Plan: `ask-razor` — a skill-router / skill-explainer
 
-> **Public version.** Some routing rows reference 🔒 Private (MaxAssist work) skills — those are listed by name only, with their trigger signals redacted. The full, unredacted plan lives in `private/ASK-RAZOR-PLAN-full.md` (git-ignored).
+> **Public version.** A few routing rows reference 🔒 private (work-specific) skills — those are noted generically, with their names and trigger signals withheld. The full, unredacted plan lives in `private/ASK-RAZOR-PLAN-full.md` (git-ignored).
 
 A meta-skill that does two jobs:
 1. **Recommend** — given a situation, suggest the best skill(s) to reach for and why.
@@ -15,7 +15,7 @@ Think of it as the front desk for your whole skill library.
 You have ~20 skills. The friction isn't running them — Claude auto-triggers most. The friction is:
 - "I have a thing to do; which of my skills fits?" (discovery)
 - "What does *this* skill actually do / when does it kick in?" (understanding)
-- Overlap confusion: the two Jira skills, `create-cowork-plugin` vs `cowork-plugin-customizer`, the two Notion skills.
+- Overlap confusion: e.g. `create-cowork-plugin` vs `cowork-plugin-customizer`, or sync vs. organize for projects.
 
 `ask-razor` is a deliberate, on-demand router so you can ask "what should I use for X?" and get a confident pick instead of guessing.
 
@@ -33,7 +33,7 @@ You have ~20 skills. The friction isn't running them — Claude auto-triggers mo
 - If the request is ambiguous between two skills, ask **one** clarifying question, then commit.
 
 ### Mode B — Explain (skill name → description)
-**Output:** what it does, its triggers, key rules/gotchas, and what it pairs or conflicts with — sourced from this repo's per-skill docs (or the `private/` docs for 🔒 skills when run locally).
+**Output:** what it does, its triggers, key rules/gotchas, and what it pairs or conflicts with — sourced from this repo's per-skill docs (or the local `private/` docs for 🔒 skills when run locally).
 
 ### Mode C — Catalog (browse)
 **Output:** the relevant group from the catalog, one line each.
@@ -42,15 +42,12 @@ You have ~20 skills. The friction isn't running them — Claude auto-triggers mo
 
 ## 3. Routing logic (how it picks)
 
-A small decision table keyed on intent signals (work-skill signals redacted here):
+A small decision table keyed on intent signals (private work-skill signals withheld here):
 
 | If the situation involves… | Pick | Over… |
 |---|---|---|
-| A work epic (🔒 private skill) | jira-epic-writer | jira-story-writer |
-| A work story / acceptance criteria (🔒 private skill) | jira-story-writer | jira-epic-writer |
-| Work demo-data SQL (🔒 private skill) | maxassist-demo-patient-parser | — |
-| Any Notion page look/structure (🔒 private skill) | notion-page-style | — |
-| Project status changing across apps | notion-ticktick-project-sync | notion-page-style |
+| A work-specific task | *🔒 private — name withheld* | another private skill |
+| Project status changing across apps | notion-ticktick-project-sync | a private skill |
 | Sorting the local Projects folder | dev-folder-organizer | the sync skill |
 | Word / Excel / PPT / PDF deliverable | docx/xlsx/pptx/pdf | — |
 | "Every day / later / remind me" | schedule | doing it once |
@@ -58,7 +55,7 @@ A small decision table keyed on intent signals (work-skill signals redacted here
 | Build/edit a skill | skill-creator | — |
 | Build vs. tailor a plugin | create-cowork-plugin vs cowork-plugin-customizer | each other |
 
-The full (unredacted) signal table lives in `private/`.
+The full (unredacted) signal table, including the private rows, lives in `private/`.
 
 ---
 
@@ -100,8 +97,7 @@ description: >
   should I use", "what should I use for", "is there a skill for", "recommend a
   skill", "explain the X skill", "what does the X skill do", "how do I use X",
   "what skills do I have for", "list my skills". Do NOT trigger on direct task
-  requests (e.g. "write this work epic", "make a deck") — let those skills
-  auto-fire normally.
+  requests (e.g. "make a deck") — let those skills auto-fire normally.
 ---
 
 # ask-razor
@@ -127,14 +123,11 @@ Give: what it does, triggers, key rules/gotchas, and what it pairs/conflicts wit
 ## Mode C — Catalog (browse)
 Return the relevant group from the catalog, one line per skill.
 
-## Routing table (fallback; work-skill signals kept in private docs)
+## Routing table (fallback; private work-skill signals kept in private docs)
 | Situation signal | Pick | Over |
 |---|---|---|
-| Work epic (private) | jira-epic-writer | jira-story-writer |
-| Work story / AC (private) | jira-story-writer | jira-epic-writer |
-| Work demo-data SQL (private) | maxassist-demo-patient-parser | — |
-| Notion page look/structure (private) | notion-page-style | — |
-| Project status change across apps | notion-ticktick-project-sync | notion-page-style |
+| A work-specific task | 🔒 private (name withheld) | another private skill |
+| Project status change across apps | notion-ticktick-project-sync | a private skill |
 | Sort the local Projects folder | dev-folder-organizer | the sync skill |
 | Word doc | docx | — |
 | Spreadsheet | xlsx | — |
@@ -148,10 +141,6 @@ Return the relevant group from the catalog, one line per skill.
 | CLAUDE.md for a repo | init | — |
 | Review a PR | review | — |
 | Security check a branch | security-review | — |
-
-## Style
-Match Razor's preferences: lead with the direct answer in 1–3 sentences, prose
-over bullets, flag a better alternative when relevant.
 ```
 
 ---
@@ -162,8 +151,8 @@ over bullets, flag a better alternative when relevant.
 2. **Open `skill-creator`** and create the skill from the draft above.
 3. **Tighten the description** — the make-or-break field; `skill-creator` can eval trigger accuracy so `ask-razor` fires on meta-questions but never steals direct task requests.
 4. **Run eval cases**, e.g.:
-   - "which skill for writing a work epic?" → recommends `jira-epic-writer` (Mode A) ✅
-   - "write this work epic" → does NOT fire; `jira-epic-writer` runs ✅
+   - "which skill for organizing my dev folder?" → recommends `dev-folder-organizer` (Mode A) ✅
+   - "organize my dev folder" → does NOT fire; `dev-folder-organizer` runs ✅
    - "explain dev-folder-organizer" → Mode B ✅
    - "what skills do I have for documents?" → Mode C ✅
 5. **Save it** via Settings → Capabilities.
@@ -173,4 +162,4 @@ over bullets, flag a better alternative when relevant.
 
 ## 8. Open questions for you
 - Should `ask-razor` ever **invoke** the recommended skill for you, or only name it? *(Recommend: only name it — keeps it a safe, read-only advisor.)*
-- Want it to cover MCP connectors/tools too (Jira, Notion, TickTick), or skills only? *(Skills-only is cleaner to start.)*
+- Want it to cover MCP connectors/tools too (e.g. Notion, TickTick), or skills only? *(Skills-only is cleaner to start.)*

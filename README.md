@@ -1,29 +1,27 @@
 # Razor's Skills
 
-A catalog of every Claude skill currently installed in this environment, what each one does, and when it fires. Skills are specialized instruction packs Claude loads on demand — each has a description that tells Claude when to trigger it and a body with the actual procedure.
+A catalog of the Claude skills I keep installed, what each one does, and when it fires.
 
-Generated: 2026-06-28
+Skills are specialized instruction packs that Claude loads on demand. Each has a short **description** that tells Claude *when* to trigger it, and a body with the actual procedure to follow. This repo documents that catalog so it's easy to see — at a glance — what capabilities are available and what each one is for. It's a reference and a starting point if you want to curate your own set.
+
+> This repo is **documentation only** — it doesn't install or run anything. The skill files here are write-ups, not live configuration.
 
 ---
 
 ## How to read this
 
-Each skill below links to a per-skill doc in [`skills/`](./skills) with a fuller write-up. Skills are grouped by purpose. The **Trigger** line is the short version of "when does Claude reach for this."
+Each skill below links to a per-skill doc in [`skills/`](./skills) with a fuller write-up. Skills are grouped by purpose. The **Trigger** column is the short version of "when does Claude reach for this."
 
 ---
 
-## 1. Personal & workflow skills (your own)
+## 1. Personal & workflow
 
-These encode *your* conventions. Some are tied to MaxAssist work and are kept **🔒 Private** — listed by name only, with details withheld from this public repo (full docs live in the git-ignored `private/` folder).
+Skills that encode personal conventions and routines.
 
 | Skill | What it does | Trigger |
 |---|---|---|
-| [dev-folder-organizer](./skills/dev-folder-organizer.md) | Files projects in `~/Documents/Development/Projects` into domain folders (apps/games/tools/web/learning) by reading each project's own docs | "organize / sort / tidy my dev folder", "where does this project go" |
-| [jira-epic-writer](./skills/jira-epic-writer.md) 🔒 | *Private (work) — listed only, details withheld* | — |
-| [jira-story-writer](./skills/jira-story-writer.md) 🔒 | *Private (work) — listed only, details withheld* | — |
-| [maxassist-demo-patient-parser](./skills/maxassist-demo-patient-parser.md) 🔒 | *Private (work) — listed only, details withheld* | — |
-| [notion-page-style](./skills/notion-page-style.md) 🔒 | *Private (work-related) — listed only, details withheld* | — |
-| [notion-ticktick-project-sync](./skills/notion-ticktick-project-sync.md) | Keeps your side-project list mirrored between Notion 🏗️ Project DB and TickTick 🔧Projects | "add / start / park / finish a project", board changes |
+| [dev-folder-organizer](./skills/dev-folder-organizer.md) | Files projects in a development folder into domain folders (apps/games/tools/web/learning) by reading each project's own docs | "organize / sort / tidy my dev folder", "where does this project go" |
+| [notion-ticktick-project-sync](./skills/notion-ticktick-project-sync.md) | Keeps a side-project list mirrored between a Notion project database and TickTick | "add / start / park / finish a project", board changes |
 
 ## 2. Document & output builders
 
@@ -63,23 +61,20 @@ Format helpers — they describe *how* to build a deliverable. Research first, t
 
 ---
 
-## 6. Agent skills — Claude Code only (`~/.agents/skills/`)
+## 6. Agent skills — Claude Code only
 
-A separate set of **21 engineering skills** (the Matt Pocock toolkit) lives at `~/.agents/skills/` and is used by **Claude Code in the terminal**, not Cowork. Full catalog: [`AGENT-SKILLS.md`](./AGENT-SKILLS.md). To enable them in Claude Code, run [`link-agents-skills.sh`](./link-agents-skills.sh) (symlinks them into `~/.claude/skills/`).
+A separate set of **21 engineering skills** lives at `~/.agents/skills/` and is used by **Claude Code in the terminal**, not Cowork. Full catalog: [`AGENT-SKILLS.md`](./AGENT-SKILLS.md). To enable them in Claude Code, run [`link-agents-skills.sh`](./link-agents-skills.sh) (it symlinks them into `~/.claude/skills/`).
 
 ---
 
 ## Proposed addition: `ask-razor`
 
-A meta-skill that recommends the best skill(s) for a situation, or explains a specific skill on request. Design and a draft `SKILL.md` live in [`ASK-RAZOR-PLAN.md`](./ASK-RAZOR-PLAN.md).
+A meta-skill that recommends the best skill(s) for a situation, or explains a specific skill on request. Design notes and a draft `SKILL.md` live in [`ASK-RAZOR-PLAN.md`](./ASK-RAZOR-PLAN.md).
 
 ---
 
-## Privacy
-
-This is a **public** repo. MaxAssist-related skills (and anything that would reveal that work approach) are marked **🔒 Private**: they're listed by name only. Their full documentation lives in `private/`, which is **git-ignored** and never published. To read or edit those, open the files under `private/skills/` locally.
-
 ## Notes
 
-- Skill files in this environment are a **read-only cache**. Editing them here does not change your saved skills — that's done in **Settings → Capabilities**.
+- Some personal and work-specific skills are intentionally **kept out of this public repo** — they're documented locally only.
+- Skill files in this environment are a **read-only cache**. Editing them here does not change the saved skills — that's done in **Settings → Capabilities**.
 - This repo is documentation only; it doesn't install or run anything.
