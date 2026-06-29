@@ -1,0 +1,7 @@
+# Private — MaxAssist / work-approach material. Never publish.
+private/
+
+# Orphaned broken git dirs (sandbox could not delete their lock files).
+# Any name starting with .git_broken — never track or publish these.
+.git_broken*
+.git_broken*/
